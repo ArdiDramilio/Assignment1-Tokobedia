@@ -1,0 +1,98 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="HomeMaster.master.cs" Inherits="Assignment.HomeMaster" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style>
+        body{
+            margin-bottom:auto;
+            margin-left:auto;
+            margin-right:auto;
+            margin-top:auto
+        }
+        .Judul{
+            position:absolute;
+            color:white;
+            font-size:40px;
+            margin-top:17px;
+            margin-left:10px;
+        }
+        .Header{
+            background-color:#46C75A;
+            width:100%;
+            height:80px;
+            text-align: left;
+        }
+        .SBtnLoginGroup{
+            position:absolute;
+            right:20px;
+            top:19px; 
+        }
+        .SBtnLogin{
+            background-color:white;
+            height:35px;
+            border:none;
+            
+        }
+         .SBtnLogout{
+            background-color:lightseagreen;
+            height:35px;
+            border:none;
+            margin-left:5px;
+            background-color:white;
+        }
+        .SBtnRegister{
+            background-color:lightseagreen;
+            height:35px;
+             }
+        .Footer{
+            position:absolute;
+            bottom:0px;
+            background-color:#46C75A;
+            height:45px;
+            width:100%;
+        }
+        .TitleFoot{
+           display: block;
+         text-align: center;
+         font-size:17px;
+         color:white;
+         margin-top:13px;
+        }
+        .auto-style1 {
+            font-size: x-large;
+            font-family:Arial;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="Header" runat="server">
+        <asp:Image ID="Image1" runat="server" Height="74px" Width="304px" ImageUrl="~/Image/Tokobedia2.jpg" BorderStyle="None" BorderWidth="1px" />
+        <B class="Judul"><span class="auto-style1">Welcome to TokoBeDia </span> <asp:Label ID="LabelNama" runat="server" style="font-size: x-large"></asp:Label> 
+        </B>
+        <div class="SBtnLoginGroup" runat="server">
+            <asp:Button ID="BtnLogin" runat="server" OnClick="BtnLogin_Click" CssClass="SBtnLogin" Text="Login" />
+             <asp:Button ID="BtnLogout" runat="server" OnClick="BtnLogout_Click" CssClass="SBtnLogout" Text="Log out" />
+        </div>
+    </div>
+
+    <div class="Middle" runat="server">
+
+    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+
+    </asp:ContentPlaceHolder>
+
+    </div>
+    <div class="Footer" runat="server">
+        <div class="TitleFoot" >Copyright by ArdiDramilio</div>
+    </div>
+    
+    </form>
+    
+</body>
+</html>

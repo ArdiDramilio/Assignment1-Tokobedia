@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TokobediaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DetailTran">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="TransactionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="MsProduct" Relationship="Self.FK__DetailTra__Produ__47DBAE45" FromRole="DetailTrans" ToRole="MsProducts" />
+    <NavigationProperty Name="HeaderTran" Relationship="Self.FK__DetailTra__Trans__2F10007B" FromRole="DetailTrans" ToRole="HeaderTrans" />
+  </EntityType>
+  <EntityType Name="HeaderTran">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="DetailTrans" Relationship="Self.FK__DetailTra__Trans__2F10007B" FromRole="HeaderTrans" ToRole="DetailTrans" />
+    <NavigationProperty Name="MsUser" Relationship="Self.FK__HeaderTra__UserI__276EDEB3" FromRole="HeaderTrans" ToRole="MsUser" />
+  </EntityType>
+  <EntityType Name="MsProducts">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProductTypeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProductPrice" Type="Int32" Nullable="false" />
+    <Property Name="ProductStock" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DetailTrans" Relationship="Self.FK__DetailTra__Produ__47DBAE45" FromRole="MsProducts" ToRole="DetailTrans" />
+    <NavigationProperty Name="MsProductType" Relationship="Self.FK__MsProduct__Produ__36B12243" FromRole="MsProducts" ToRole="MsProductType" />
+  </EntityType>
+  <EntityType Name="MsProductType">
+    <Key>
+      <PropertyRef Name="ProductTypeID" />
+    </Key>
+    <Property Name="ProductTypeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProductTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProductTypeDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="MsProducts" Relationship="Self.FK__MsProduct__Produ__36B12243" FromRole="MsProductType" ToRole="MsProducts" />
+  </EntityType>
+  <EntityType Name="MsRole">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="MsUsers" Relationship="Self.FK__MsUser__RoleID__286302EC" FromRole="MsRole" ToRole="MsUser" />
+  </EntityType>
+  <EntityType Name="MsUser">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RoleID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserGender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="HeaderTrans" Relationship="Self.FK__HeaderTra__UserI__276EDEB3" FromRole="MsUser" ToRole="HeaderTrans" />
+    <NavigationProperty Name="MsRole" Relationship="Self.FK__MsUser__RoleID__286302EC" FromRole="MsUser" ToRole="MsRole" />
+  </EntityType>
+  <Association Name="FK__DetailTra__Produ__47DBAE45">
+    <End Role="MsProducts" Type="TokobediaModel.MsProducts" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DetailTrans" Type="Self.DetailTran" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsProducts">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="DetailTrans">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetailTra__Trans__2F10007B">
+    <End Role="HeaderTrans" Type="Self.HeaderTran" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DetailTrans" Type="Self.DetailTran" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HeaderTrans">
+        <PropertyRef Name="TransactionID" />
+      </Principal>
+      <Dependent Role="DetailTrans">
+        <PropertyRef Name="TransactionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__HeaderTra__UserI__276EDEB3">
+    <End Role="MsUser" Type="Self.MsUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="HeaderTrans" Type="Self.HeaderTran" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsUser">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="HeaderTrans">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MsProduct__Produ__36B12243">
+    <End Role="MsProductType" Type="Self.MsProductType" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MsProducts" Type="TokobediaModel.MsProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsProductType">
+        <PropertyRef Name="ProductTypeID" />
+      </Principal>
+      <Dependent Role="MsProducts">
+        <PropertyRef Name="ProductTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MsUser__RoleID__286302EC">
+    <End Role="MsRole" Type="Self.MsRole" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MsUser" Type="Self.MsUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsRole">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="MsUser">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TokobediaEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DetailTrans" EntityType="Self.DetailTran" />
+    <EntitySet Name="HeaderTrans" EntityType="Self.HeaderTran" />
+    <EntitySet Name="MsProducts1" EntityType="TokobediaModel.MsProducts" />
+    <EntitySet Name="MsProductTypes" EntityType="Self.MsProductType" />
+    <EntitySet Name="MsRoles" EntityType="Self.MsRole" />
+    <EntitySet Name="MsUsers" EntityType="Self.MsUser" />
+    <AssociationSet Name="FK__DetailTra__Produ__47DBAE45" Association="Self.FK__DetailTra__Produ__47DBAE45">
+      <End Role="MsProducts" EntitySet="MsProducts1" />
+      <End Role="DetailTrans" EntitySet="DetailTrans" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetailTra__Trans__2F10007B" Association="Self.FK__DetailTra__Trans__2F10007B">
+      <End Role="HeaderTrans" EntitySet="HeaderTrans" />
+      <End Role="DetailTrans" EntitySet="DetailTrans" />
+    </AssociationSet>
+    <AssociationSet Name="FK__HeaderTra__UserI__276EDEB3" Association="Self.FK__HeaderTra__UserI__276EDEB3">
+      <End Role="MsUser" EntitySet="MsUsers" />
+      <End Role="HeaderTrans" EntitySet="HeaderTrans" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MsProduct__Produ__36B12243" Association="Self.FK__MsProduct__Produ__36B12243">
+      <End Role="MsProductType" EntitySet="MsProductTypes" />
+      <End Role="MsProducts" EntitySet="MsProducts1" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MsUser__RoleID__286302EC" Association="Self.FK__MsUser__RoleID__286302EC">
+      <End Role="MsRole" EntitySet="MsRoles" />
+      <End Role="MsUser" EntitySet="MsUsers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
